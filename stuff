@@ -1,0 +1,47 @@
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func Proceso(id uint64, c chan uint64) {
+
+	i := uint64(0)
+	for {
+		fmt.Printf("id %d: %d \n", id, i)
+		c <- id
+		i = i + 1
+		time.Sleep(time.Millisecond * 500)
+	}
+}
+
+func main() {
+	var opc string
+	var cont uint64 = 1
+	//var countercont uint64 = 1
+
+	for opc != "0" {
+
+		fmt.Println("1)Agregar proceso\n2)Mostrar proceso\n3)Elminar procesos\n0)Salir")
+		fmt.Scanln(&opc)
+
+		switch opc {
+		case "1":
+			print("Case 1\n")
+			c := make(chan uint64)
+			go Proceso(cont, c)
+
+			msg := <-c
+			fmt.Println(msg)
+
+		case "2":
+			print("Case 2\n")
+
+		case "3":
+			print("Case 3\n")
+		}
+
+	}
+	println("Out")
+}
